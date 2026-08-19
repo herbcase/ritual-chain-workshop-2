@@ -95,6 +95,38 @@ cp .env.example .env
 
 ---
 
+## Local proof-of-building notes
+
+Ritual Chain testnet was unavailable when I completed this workshop, so I focused
+on local verification instead of deployment transactions.
+
+What I changed and verified:
+
+- completed the missing `RitualPredict.sol` workshop functions for market
+  creation, scheduled resolution, TEE executor selection, HTTP oracle reads, and
+  scheduler booking
+- added a local `MockScheduler` contract so Hardhat tests can exercise market
+  creation without a live Ritual Scheduler system contract
+- replaced the starter `Counter` test with `RitualPredict.local.ts`, covering
+  market rule storage and YES/NO stake accounting
+- compiled the contracts locally with Hardhat 3 and Solidity `0.8.28`
+- ran the local Hardhat test suite successfully
+
+Local verification commands:
+
+```bash
+cd hardhat
+pnpm install
+npx hardhat build
+npx hardhat test
+```
+
+Because the full scheduler, TEE executor, HTTP precompile, and jq precompile
+path depends on Ritual Chain runtime contracts, the end-to-end on-chain
+resolution flow is documented in code but not deployed while the chain is down.
+
+---
+
 ## Scope
 
 Intentionally not included: an AMM, an order book, an order-matching engine, governance, a separate
